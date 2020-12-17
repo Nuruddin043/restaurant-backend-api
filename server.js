@@ -17,9 +17,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const itemsRouter=require('./src/routers/items')
 const diningRouter=require('./src/routers/dining_status')
+const menuRouter=require('./src/routers/menu')
 app.use(itemsRouter)
 app.use(diningRouter)
-
+app.use(menuRouter)
 
 /////error handling route
 app.use((req, res, next) => {

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const Item=require('../models/items')
 const string_required = {
     type: String,
     required: true,
@@ -10,13 +10,9 @@ const menuSchema = new mongoose.Schema({
         ...string_required
     },
     item_list: [{
-        item: {
-
             type: mongoose.Schema.Types.ObjectId,
             required: true,
             ref: 'Item'
-
-        }
     }]
 
 })

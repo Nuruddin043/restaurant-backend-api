@@ -25,6 +25,8 @@ const itemSchema=new mongoose.Schema({
     
 })
 
+
+
 ///to delete image data
 itemSchema.methods.toJSON = function(){
     const item=this
