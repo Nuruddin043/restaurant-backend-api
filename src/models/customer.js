@@ -1,5 +1,6 @@
 const mongoose=require('mongoose');
-
+const bcrypt=require('bcrypt')
+const jwt=require('jsonwebtoken')
 const string_required={
     type:String,
     required:true,
@@ -20,7 +21,8 @@ const customerSchema=new mongoose.Schema({
     },
     password:{
         type:String,
-        trim:true
+        trim:true,
+        required:true
     },
     tokens:[{
         token:{
@@ -30,10 +32,17 @@ const customerSchema=new mongoose.Schema({
     }]
     
 })
+customerSchema.methods.toJSON = function(){
+    const customer=this
+    const customerObject= customer.toObject()
+    delete customerObject.password
+    delete customerObject.tokens
+    return customerObject
+}
 
 customerSchema.methods.generateAuthToken=async function(){
     const customer=this
-    const token=jwt.sign({_id:customer._id.toString()},process.env.JWT_SECRET)
+    const token=jwt.sign({_id:customer._id.toString()},process.env.ACCESS_TOKEN_SECRET)
     customer.tokens= customer.tokens.concat({token})
     await customer.save()
     return token
@@ -48,7 +57,7 @@ customerSchema.pre('save',async function(next){
 })
 
 customerSchema.statics.findByCredentials= async(mobile,password)=>{
-    const customer=await customer.findOne({mobile})
+    const customer=await Customer.findOne({mobile})
     if(!customer){
         throw new Error('unable to login')
     }

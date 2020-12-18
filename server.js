@@ -18,10 +18,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const itemsRouter=require('./src/routers/items')
 const diningRouter=require('./src/routers/dining_status')
 const menuRouter=require('./src/routers/menu')
+const customerRouter=require('./src/routers/customer')
+const tableRouter=require('./src/routers/table')
+const reservationRouter=require('./src/routers/reservation')
+const orderRouter=require('./src/routers/order')
 app.use(itemsRouter)
 app.use(diningRouter)
 app.use(menuRouter)
-
+app.use(customerRouter)
+app.use(tableRouter)
+app.use(reservationRouter)
+app.use(orderRouter)
 /////error handling route
 app.use((req, res, next) => {
     const error = new Error(`Not found -${req.originalUrl}`)

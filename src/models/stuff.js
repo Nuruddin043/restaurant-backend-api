@@ -26,10 +26,17 @@ const stuffSchema=new mongoose.Schema({
     }]
     
 })
+stuffSchema.methods.toJSON = function(){
+    const stuff=this
+    const stuffObject= stuff.toObject()
+    delete stuffObject.password
+    delete stuffObject.tokens
+    return stuffObject
+}
 
 stuffSchema.methods.generateAuthToken=async function(){
     const stuff=this
-    const token=jwt.sign({_id:stuff._id.toString()},process.env.JWT_SECRET)
+    const token=jwt.sign({_id:stuff._id.toString()},process.env.ACCESS_TOKEN_SECRET)
     stuff.tokens= stuff.tokens.concat({token})
     await stuff.save()
     return token
