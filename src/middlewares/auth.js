@@ -1,16 +1,16 @@
 const jwt=require('jsonwebtoken')
-const Sutff=require('../models/stuff')
+const Sutff=require('../models/staff')
 const Customer=require('../models/customer')
 
-const stuffAuth= async (req,res,next)=>{
+const staffAuth= async (req,res,next)=>{
     try{
         const token=req.header('Authorization').replace('Bearer ','')
         const decoded=jwt.verify(token,process.env.ACCESS_TOKEN_SECRET)
-        const stuff= await Sutff.findOne({_id:decoded._id,'tokens.token':token})
-        if(!stuff){
+        const staff= await Sutff.findOne({_id:decoded._id,'tokens.token':token})
+        if(!staff){
             throw new Error()
         }
-        req.user=stuff
+        req.user=staff
         req.token=token
         next()
         
@@ -43,6 +43,6 @@ const customerAuth= async (req,res,next)=>{
 
 
 module.exports={
-    stuffAuth,
+    staffAuth,
     customerAuth
 }

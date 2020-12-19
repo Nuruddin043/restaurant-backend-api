@@ -5,20 +5,21 @@ const string_required={
     required:true,
     trim:true
 }
-const reservationSchema=new mongoose.Schema({
-    customer_id:{
+const billSchema=new mongoose.Schema({
+    order_id:{
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'Customer'
+        ref: 'Order'
     },
-    res_date:{
-        type:Date,
+    total_price:{
+        type:Number,
         required:true
     },
-    no_of_guests:{
-        type:Number
+    tax:{
+        type:Number,
+        required:true
     },
-    table_no:{
+    total_bill:{
         type:Number,
         required:true
     }
@@ -26,6 +27,6 @@ const reservationSchema=new mongoose.Schema({
 })
 
 
-const Reservation=mongoose.model('Reservation',reservationSchema)
+const Bill=mongoose.model('Bill',billSchema)
 
-module.exports=Reservation
+module.exports=Bill

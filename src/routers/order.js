@@ -10,6 +10,8 @@ router.get('/all_order',order.getAllOrderInfo)
 
 router.get('/order/:order_id',order.getSingleOrderInfo)
 
-router.delete('/delete_order/:order_id',order.deleteSingleOrder)
+router.get('/delete_order/:order_id',order.deleteSingleOrder)
+
+router.get('/bill_info/:order_id',order.getBillInfo)
 
 module.exports=router
